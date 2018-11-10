@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" /> 
+<meta content="telephone=no" name="format-detection" />
+<title>健康报告</title>
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="stylesheet" type="text/css" href="css/basic.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+<div class="my_view bck-col-f4" id="appVUE">
+	<header class="header">
+		<a class="t-left fl" id="goSetUp">设置</a>
+		<a class="t-right fr" id="checkHistory">历史报告</a>
+		<p class="t-cen"><span>{{inspectDate}}</span></p>
+	</header>
+	<div class="all_score">
+		<div class="circle_b">
+			<div class="circle"> 
+				<i></i><strong></strong>
+				<div class="box-d"></div>
+			</div>
+		</div>
+		<div class="score_inf">
+			<p class="inf-rk"><i class="i_bronze"></i>您的综合得分好于{{ranking}}%的人</p>
+			<a class="inf-sg">您有<span></span>项健康改善建议</a>
+		</div>
+	</div>
+	
+	<div class="tip-text">基于您身体的异常状况，建议您<em id="sugDay">7</em>日后再次复检</div>
+	<p style="background:#f4f4f4; height:10px; margin:0;"></p>
+	
+	<div class="slnl_d">
+		<div class="d-con">
+			<p class="btt">生理年龄</p>
+			<p class="ltt" v-html="reportStr"></p>
+			<div class="ctt" v-html="firstStr"></div>
+		</div>
+	</div>
+	<p style="background:#f4f4f4; height:10px; margin:0;"></p>
+	
+	<div class="index_tab clearfix">
+	  	<span class="on">健康指数</span><span>身体状况</span>
+    </div>
+    <div class="zhibiao_c indexShow">
+    	<a class="c_li" v-for="site in sites" :href="site.targetFirstId|getSecondHref">
+    		<i class="ico"></i><span class="lab">{{site.targetFirstName}}</span><em class="pop"></em>
+    		<div class="v_overlert">
+				<div class="tc_sy">
+					<p class="bit"><span class="labt">{{site.targetFirstName}}</span><em></em></p>
+					<div class="bxt">{{site.inspectExplain}}</div>
+				</div>
+			</div>
+			<div class="tiptxt">{{site.inspectExplain}}</div>
+    		<i class="arr fr"></i><span class="fen fr">{{site.score}}分</span>
+    	</a>
+    </div>
+    <div class="zhuangk_c indexShow" style="display: none;">
+    	<div class="c_li" v-for="state in status">
+    		<span class="lab">{{state.targetThirdName}}</span><i class="pop"></i>
+    		<div class="v_overlert">
+				<div class="tc_sy">
+					<p class="bit"><span class="labt">{{state.targetThirdName}}</span><em></em></p>
+					<div class="bxt">{{state.inspectExplain}}</div>
+				</div>
+			</div>
+    		<div class="tiptxt"></div>
+    		<div class="lev">{{state.abnormalLevel}}</div>
+    		<span class="sta fr">
+    			<i class="on"></i><i class=""></i><i class=""></i><i></i><i></i>
+    		</span>
+    		<span class="sta2 fr">{{state.analysisResults}}</span>
+    	</div>
+    </div>
+    
+    <input type="hidden" id="appId"/>
+    <input type="hidden" id="nonceStr"/>
+    <input type="hidden" id="signature"/>
+    <input type="hidden" id="timestamp"/>
+    <input type="hidden" id="age"/>
+    <input type="hidden" id="share" value="201"/>
+    
+	<div class="statement"><a href="notice.html" style="display: block;">用户须知</a></div>
+</div>
+<div class="v_overlay"></div>
+<div class="load-overlay">
+	<div class="loadimg"><img src="img/loading.gif"></div>
+</div>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/circle-progress.js"></script>
+<script src="js/index.js?v=20181018"></script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript">
+(function (doc, win) {
+    var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            if(clientWidth>=750){
+                docEl.style.fontSize = '100px';
+            }else{
+                docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+            }
+        };
+
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+})(document, window);
+</script>
+
+<script src="js/wxShare.js"></script>
+</body>
+</html>
